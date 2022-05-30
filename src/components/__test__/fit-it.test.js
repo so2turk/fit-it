@@ -23,7 +23,7 @@ it('should have an evaluate button', () => {
 	expect(screen.getByTestId('eva-btn').textContent).toBe('Fit It')
 })
 
-test('should change input value', () => {
+it('should change input value', () => {
 	setup()
 	const inputEl = screen.getByTestId('input')
 
@@ -40,7 +40,7 @@ it("should have an added items' field", () => {
 	expect(screen.getByTestId('add-field').textContent).toBe('')
 })
 
-test("should change added items' field", () => {
+it("should change added items' field", () => {
 	setup()
 	const inputEl = screen.getByTestId('input')
 	const addButtonEl = screen.getByTestId('add-btn')
@@ -53,4 +53,22 @@ test("should change added items' field", () => {
 	fireEvent.click(addButtonEl)
 
 	expect(screen.getByTestId('add-field').textContent).toBe('fit-it')
+})
+
+it('should separate input as title and duration', () => {
+	setup()
+	const inputEl = screen.getByTestId('input')
+	const addButtonEl = screen.getByTestId('add-btn')
+
+	fireEvent.change(inputEl, {
+		target: {
+			value: 'Test Driven Development 30min',
+		},
+	})
+	fireEvent.click(addButtonEl)
+
+	expect(screen.getByTestId('add-field-title').textContent).toBe(
+		'Test Driven Development'
+	)
+	expect(screen.getByTestId('add-field-duration').textContent).toBe('30min')
 })
