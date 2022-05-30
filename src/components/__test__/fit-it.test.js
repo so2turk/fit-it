@@ -72,3 +72,31 @@ it('should separate input as title and duration', () => {
 	)
 	expect(screen.getByTestId('add-field-duration').textContent).toBe('30min')
 })
+
+it('should warn user with invalid (title contains number) input', () => {
+	setup()
+	const inputEl = screen.getByTestId('input')
+	const addButtonEl = screen.getByTestId('add-btn')
+
+	fireEvent.change(inputEl, {
+		target: {
+			value: 'Test 7 Development 30min',
+		},
+	})
+	fireEvent.click(addButtonEl)
+
+	expect(screen.getByTestId('alert').textContent).toBe(
+		'Title should not contain number(s)'
+	)
+
+	fireEvent.change(inputEl, {
+		target: {
+			value: 'Test Diriven Development 7 30min',
+		},
+	})
+	fireEvent.click(addButtonEl)
+
+	expect(screen.getByTestId('alert').textContent).toBe(
+		'Title should not contain number(s)'
+	)
+})

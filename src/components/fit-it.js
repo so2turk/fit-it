@@ -3,10 +3,18 @@ import { useState } from 'react'
 const FitIt = () => {
 	const [lines, setLines] = useState([])
 	const [line, setLine] = useState('')
+	const [warning, setWarning] = useState()
 
 	const handleLineAdd = () => {
+		setWarning()
 		const title = handleTitle(line)
 		let duration = handleDuration(line, title)
+
+		const alert = lineCheck(title, duration)
+		if (alert) {
+			setWarning(lineCheck(title, duration))
+			return
+		}
 
 		setLines((prev) => [...prev, { title, duration }])
 		setLine('')
@@ -21,6 +29,11 @@ const FitIt = () => {
 	function handleDuration(line, text) {
 		if (line === 'lightning') return '5'
 		return line.replace(text, '').trim()
+	}
+
+	function lineCheck(title, duration) {
+		if (title.match(/[0-9]/)) return 'Title should not contain number(s)'
+		return
 	}
 
 	return (
@@ -47,6 +60,9 @@ const FitIt = () => {
 				Add
 			</button>
 			<button data-testid="eva-btn">Fit It</button>
+			<div style={{ color: 'red', fontWeight: 'bold' }} data-testid="alert">
+				{warning}
+			</div>
 		</>
 	)
 }
