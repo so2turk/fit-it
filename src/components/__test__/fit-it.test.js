@@ -34,3 +34,23 @@ test('should change input value', () => {
 	})
 	expect(inputEl.value).toBe('fit-it')
 })
+
+it("should have an added items' field", () => {
+	setup()
+	expect(screen.getByTestId('add-field').textContent).toBe('')
+})
+
+test("should change added items' field", () => {
+	setup()
+	const inputEl = screen.getByTestId('input')
+	const addButtonEl = screen.getByTestId('add-btn')
+
+	fireEvent.change(inputEl, {
+		target: {
+			value: 'fit-it',
+		},
+	})
+	fireEvent.click(addButtonEl)
+
+	expect(screen.getByTestId('add-field').textContent).toBe('fit-it')
+})
