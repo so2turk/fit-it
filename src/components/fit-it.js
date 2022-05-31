@@ -7,33 +7,43 @@ const FitIt = () => {
 
 	const handleLineAdd = () => {
 		setWarning()
-		const title = handleTitle(line)
-		let duration = handleDuration(line, title)
 
-		const alert = lineCheck(title, duration)
-		if (alert) {
-			setWarning(lineCheck(title, duration))
+		const decodedLine = checkLine(line)
+		if (decodedLine.alert) {
+			setWarning(decodedLine.alert)
 			return
 		}
 
-		setLines((prev) => [...prev, { title, duration }])
+		setLines((prev) => [
+			...prev,
+			{ title: decodedLine.title, duration: decodedLine.duration },
+		])
 		setLine('')
 	}
 
-	function handleTitle(line) {
-		let duration = /([0-9])\w+$/
-		if (line.endsWith('lightning')) duration = 'lightning'
-		return line.replace(duration, '').trim()
-	}
+	function checkLine(line) {
+		const lineArr = line.split(' ')
+		let duration
+		let title
 
-	function handleDuration(line, text) {
-		if (line === 'lightning') return '5'
-		return line.replace(text, '').trim()
-	}
+		if (lineArr.length > 1) {
+			duration = lineArr[lineArr.length - 1]
+			title = lineArr.join(' ').replace(duration, '').trim()
 
-	function lineCheck(title, duration) {
-		if (title.match(/[0-9]/)) return 'Title should not contain number(s)'
-		return
+			if (title.match(/[0-9]/))
+				return { alert: 'Title should not contain number(s)' }
+			if (!duration.match(/^[0-9]+(min)$|^lightning$/)) {
+				return {
+					alert:
+						"Duration should be givin in minuntes (as 30min) or 'lightning' (= 5min)",
+				}
+			} else if (duration === 'lightning') duration = '5'
+			else duration = duration.replace('min', '')
+
+			return { title, duration }
+		}
+
+		return { alert: 'Title and duration should be provided' }
 	}
 
 	return (
@@ -45,7 +55,7 @@ const FitIt = () => {
 						return (
 							<div key={i}>
 								<div data-testid="add-field-title">{line.title}</div>
-								<div data-testid="add-field-duration">{line.duration}</div>
+								<div data-testid="add-field-duration">{line.duration}min</div>
 							</div>
 						)
 					})}

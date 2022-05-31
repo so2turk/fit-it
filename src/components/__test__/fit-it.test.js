@@ -52,7 +52,11 @@ it("should change added items' field", () => {
 	})
 	fireEvent.click(addButtonEl)
 
-	expect(screen.getByTestId('add-field').textContent).toBe('fit-it')
+	// test updated
+	// expect(screen.getByTestId('add-field').textContent).toBe('fit-it')
+	expect(screen.getByTestId('alert').textContent).toBe(
+		'Title and duration should be provided'
+	)
 })
 
 it('should separate input as title and duration', () => {
@@ -98,5 +102,33 @@ it('should warn user with invalid (title contains number) input', () => {
 
 	expect(screen.getByTestId('alert').textContent).toBe(
 		'Title should not contain number(s)'
+	)
+})
+
+it('should warn user with invalid (wrong duration format) input', () => {
+	setup()
+	const inputEl = screen.getByTestId('input')
+	const addButtonEl = screen.getByTestId('add-btn')
+
+	fireEvent.change(inputEl, {
+		target: {
+			value: 'Test Driven Development lightning7',
+		},
+	})
+	fireEvent.click(addButtonEl)
+
+	expect(screen.getByTestId('alert').textContent).toBe(
+		"Duration should be givin in minuntes (as 30min) or 'lightning' (= 5min)"
+	)
+
+	fireEvent.change(inputEl, {
+		target: {
+			value: 'Test Diriven Development m30min',
+		},
+	})
+	fireEvent.click(addButtonEl)
+
+	expect(screen.getByTestId('alert').textContent).toBe(
+		"Duration should be givin in minuntes (as 30min) or 'lightning' (= 5min)"
 	)
 })
