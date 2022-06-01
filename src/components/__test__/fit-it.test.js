@@ -73,10 +73,10 @@ it('should separate input as title and duration', () => {
 	})
 	fireEvent.click(addButtonEl)
 
-	expect(screen.getByTestId('add-field-title').textContent).toBe(
+	expect(screen.getByTestId('add-field-title-0').textContent).toBe(
 		'Test Driven Development'
 	)
-	expect(screen.getByTestId('add-field-duration').textContent).toBe('30min')
+	expect(screen.getByTestId('add-field-duration-0').textContent).toBe('30min')
 })
 
 it('should warn user with invalid (title contains number) input', () => {
@@ -154,17 +154,17 @@ it("should change fitted item' field", () => {
 	})
 	fireEvent.click(addButtonEl)
 
-	expect(screen.getByTestId('add-field-title').textContent).toBe(
+	expect(screen.getByTestId('add-field-title-0').textContent).toBe(
 		'Test Driven Development'
 	)
-	expect(screen.getByTestId('add-field-duration').textContent).toBe('30min')
+	expect(screen.getByTestId('add-field-duration-0').textContent).toBe('30min')
 	expect(screen.getByTestId('fit-field').textContent).toBe('')
 
 	fireEvent.click(fitButtonEl)
 
-	expect(screen.getByTestId('fit-field-title').textContent).toBe(
+	expect(screen.getByTestId('fit-field-title-0').textContent).toBe(
 		'Test Driven Development'
 	)
-	expect(screen.getByTestId('fit-field-duration').textContent).toBe('30min')
+	expect(screen.getByTestId('fit-field-duration-0').textContent).toBe('30min')
 })
 

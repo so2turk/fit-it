@@ -58,8 +58,10 @@ const FitIt = () => {
 					lines.map((line, i) => {
 						return (
 							<div key={i}>
-								<div data-testid="add-field-title">{line.title}</div>
-								<div data-testid="add-field-duration">{line.duration}min</div>
+								<div data-testid={`add-field-title-${i}`}>{line.title}</div>
+								<div data-testid={`add-field-duration-${i}`}>
+									{line.duration}min
+								</div>
 							</div>
 						)
 					})}
@@ -84,8 +86,10 @@ const FitIt = () => {
 					fittedLines.map((fittedLine, i) => {
 						return (
 							<div key={i}>
-								<div data-testid="fit-field-title">{fittedLine.title}</div>
-								<div data-testid="fit-field-duration">
+								<div data-testid={`fit-field-title-${i}`}>
+									{fittedLine.title}
+								</div>
+								<div data-testid={`fit-field-duration-${i}`}>
 									{fittedLine.duration}min
 								</div>
 							</div>
