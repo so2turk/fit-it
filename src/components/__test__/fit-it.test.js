@@ -1,6 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import FitIt from '../fit-it'
 
+import testData from '../../test-data.json'
+
 const setup = () => render(<FitIt />)
 
 it('should have a title', () => {
