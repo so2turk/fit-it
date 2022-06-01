@@ -20,7 +20,7 @@ it('should have an add button', () => {
 
 it('should have an evaluate button', () => {
 	setup()
-	expect(screen.getByTestId('eva-btn').textContent).toBe('Fit It')
+	expect(screen.getByTestId('fit-btn').textContent).toBe('Fit It')
 })
 
 it('should change input value', () => {
@@ -132,3 +132,37 @@ it('should warn user with invalid (wrong duration format) input', () => {
 		"Duration should be givin in minuntes (as 30min) or 'lightning' (= 5min)"
 	)
 })
+
+it("should have an fitted items' field", () => {
+	setup()
+
+	expect(screen.getByTestId('fit-field').textContent).toBe('')
+})
+
+it("should change fitted item' field", () => {
+	setup()
+	const inputEl = screen.getByTestId('input')
+	const addButtonEl = screen.getByTestId('add-btn')
+	const fitButtonEl = screen.getByTestId('fit-btn')
+
+	fireEvent.change(inputEl, {
+		target: {
+			value: 'Test Driven Development 30min',
+		},
+	})
+	fireEvent.click(addButtonEl)
+
+	expect(screen.getByTestId('add-field-title').textContent).toBe(
+		'Test Driven Development'
+	)
+	expect(screen.getByTestId('add-field-duration').textContent).toBe('30min')
+	expect(screen.getByTestId('fit-field').textContent).toBe('')
+
+	fireEvent.click(fitButtonEl)
+
+	expect(screen.getByTestId('fit-field-title').textContent).toBe(
+		'Test Driven Development'
+	)
+	expect(screen.getByTestId('fit-field-duration').textContent).toBe('30min')
+})
+

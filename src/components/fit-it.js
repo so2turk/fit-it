@@ -4,6 +4,7 @@ const FitIt = () => {
 	const [lines, setLines] = useState([])
 	const [line, setLine] = useState('')
 	const [warning, setWarning] = useState()
+	const [fittedLines, setFittedLines] = useState([])
 
 	const handleLineAdd = () => {
 		setWarning()
@@ -46,6 +47,9 @@ const FitIt = () => {
 		return { alert: 'Title and duration should be provided' }
 	}
 
+	function fitIt() {
+		setFittedLines([...lines])
+	}
 	return (
 		<>
 			<h1 data-testid="title">Fit-It</h1>
@@ -69,9 +73,24 @@ const FitIt = () => {
 			<button data-testid="add-btn" onClick={handleLineAdd}>
 				Add
 			</button>
-			<button data-testid="eva-btn">Fit It</button>
+			<button data-testid="fit-btn" onClick={() => fitIt()}>
+				Fit It
+			</button>
 			<div style={{ color: 'red', fontWeight: 'bold' }} data-testid="alert">
 				{warning}
+			</div>
+			<div data-testid="fit-field">
+				{fittedLines.length > 0 &&
+					fittedLines.map((fittedLine, i) => {
+						return (
+							<div key={i}>
+								<div data-testid="fit-field-title">{fittedLine.title}</div>
+								<div data-testid="fit-field-duration">
+									{fittedLine.duration}min
+								</div>
+							</div>
+						)
+					})}
 			</div>
 		</>
 	)
