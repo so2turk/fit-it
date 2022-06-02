@@ -120,7 +120,7 @@ it('should warn user with invalid (wrong duration format) input', () => {
 	fireEvent.click(addButtonEl)
 
 	expect(screen.getByTestId('alert').textContent).toBe(
-		"Duration should be givin in minuntes (as 30min) or 'lightning' (= 5min)"
+		"Duration should be given in minuntes (as 30min) or 'lightning' (= 5min)"
 	)
 
 	fireEvent.change(inputEl, {
@@ -131,7 +131,7 @@ it('should warn user with invalid (wrong duration format) input', () => {
 	fireEvent.click(addButtonEl)
 
 	expect(screen.getByTestId('alert').textContent).toBe(
-		"Duration should be givin in minuntes (as 30min) or 'lightning' (= 5min)"
+		"Duration should be given in minuntes (as 30min) or 'lightning' (= 5min)"
 	)
 })
 
@@ -168,3 +168,52 @@ it("should change fitted item' field", () => {
 	expect(screen.getByTestId('fit-field-duration-0').textContent).toBe('30min')
 })
 
+it('should change the add-field for multiple data entries', () => {
+	setup()
+	const inputEl = screen.getByTestId('input')
+	const addButtonEl = screen.getByTestId('add-btn')
+	const fitButtonEl = screen.getByTestId('fit-btn')
+
+	testData.SPEECHS.map((line, i) => {
+		fireEvent.change(inputEl, {
+			target: {
+				value: `${line.title} ${line.duration}min`,
+			},
+		})
+		fireEvent.click(addButtonEl)
+
+		expect(screen.getByTestId(`add-field-title-${i}`).textContent).toBe(
+			`${line.title}`
+		)
+		expect(screen.getByTestId(`add-field-duration-${i}`).textContent).toBe(
+			`${line.duration}min`
+		)
+		expect(screen.getByTestId('fit-field').textContent).toBe('')
+	})
+})
+
+it('should change the fit-field for multiple data entries', () => {
+	setup()
+	const inputEl = screen.getByTestId('input')
+	const addButtonEl = screen.getByTestId('add-btn')
+	const fitButtonEl = screen.getByTestId('fit-btn')
+
+	testData.SPEECHS.map((line, i) => {
+		fireEvent.change(inputEl, {
+			target: {
+				value: `${line.title} ${line.duration}min`,
+			},
+		})
+		fireEvent.click(addButtonEl)
+	})
+
+	fireEvent.click(fitButtonEl)
+	testData.SPEECHS.map((line, i) => {
+		expect(screen.getByTestId(`fit-field-title-${i}`).textContent).toBe(
+			`${line.title}`
+		)
+		expect(screen.getByTestId(`add-field-duration-${i}`).textContent).toBe(
+			`${line.duration}min`
+		)
+	})
+})

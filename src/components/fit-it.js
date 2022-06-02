@@ -36,7 +36,7 @@ const FitIt = () => {
 			if (!duration.match(/^[0-9]+(min)$|^lightning$/)) {
 				return {
 					alert:
-						"Duration should be givin in minuntes (as 30min) or 'lightning' (= 5min)",
+						"Duration should be given in minuntes (as 30min) or 'lightning' (= 5min)",
 				}
 			} else if (duration === 'lightning') duration = '5'
 			else duration = duration.replace('min', '')
