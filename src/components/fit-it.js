@@ -5,8 +5,9 @@ const FitIt = () => {
 	const [line, setLine] = useState('')
 	const [warning, setWarning] = useState()
 	const [fittedLines, setFittedLines] = useState([])
+	const handleLineAdd = (e) => {
+		e.preventDefault()
 
-	const handleLineAdd = () => {
 		setWarning()
 
 		const decodedLine = checkLine(line)
@@ -192,18 +193,28 @@ const FitIt = () => {
 				<h1 data-testid="title">Fit-It</h1>
 			</header>
 			<section className="input-field">
-				<input
-					data-testid="input"
-					type="text"
-					value={line}
-					onChange={(e) => setLine(e.target.value)}
-				/>
-				<button data-testid="add-btn" onClick={handleLineAdd}>
-					Add
-				</button>
-				<button data-testid="fit-btn" onClick={() => fitIt()}>
-					Fit It
-				</button>
+				<form className="input-form" onSubmit={handleLineAdd}>
+					<input
+						data-testid="input"
+						type="text"
+						value={line}
+						onChange={(e) => setLine(e.target.value)}
+					/>
+					<button
+						type="submit"
+						className="button add-btn"
+						data-testid="add-btn"
+					>
+						Add
+					</button>
+					<button
+						data-testid="fit-btn"
+						className="button fit-btn"
+						onClick={() => fitIt()}
+					>
+						Fit It
+					</button>
+				</form>
 			</section>
 			<section className="alert">
 				<div style={{ color: 'red', fontWeight: 'bold' }} data-testid="alert">
