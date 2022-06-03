@@ -187,6 +187,10 @@ const FitIt = () => {
 		}${pm ? 'PM' : 'AM'}`
 	}
 
+	function handleRemove(index) {
+		setLines((prev) => prev.filter((item, j) => index !== j))
+	}
+
 	return (
 		<>
 			<header>
@@ -227,6 +231,18 @@ const FitIt = () => {
 						lines.map((line, i) => {
 							return (
 								<div className="add-field" key={i}>
+									<div>
+										<img
+											style={{
+												width: '8px',
+												marginRight: '5px',
+												align: 'center',
+											}}
+											alt="lol"
+											src="/assets/red_trash.png"
+											onClick={() => handleRemove(i)}
+										/>
+									</div>
 									<div data-testid={`add-field-title-${i}`}>{line.title}</div>
 									<div
 										className="duration"
