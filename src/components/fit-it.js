@@ -62,7 +62,7 @@ const FitIt = () => {
 		if (
 			Math.floor(linesData[1] / (6 * 60)) !== Math.ceil(linesData[1] / (7 * 60))
 		)
-			setWarning('Please add more line for correct fit')
+			setWarning('Please add more line for better fit')
 
 		setFittedLines([])
 		const weightedAvg = linesData[0] / 1.1

@@ -311,7 +311,6 @@ it('should show time(am-pm), track no and fixed events(lunch & networking)', () 
 		if (!order[i]) noLineRows.push(i)
 	}
 
-	console.log(noLineRows)
 	let noLineOrder = [
 		['Track', ''],
 		['12:00PM', 'Lunch'],
