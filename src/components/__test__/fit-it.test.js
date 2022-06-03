@@ -162,10 +162,11 @@ it("should change fitted item' field", () => {
 
 	fireEvent.click(fitButtonEl)
 
-	expect(screen.getByTestId('fit-field-title-0').textContent).toBe(
+	// test update
+	expect(screen.getByTestId('fit-field-title-1').textContent).toBe(
 		'Test Driven Development'
 	)
-	expect(screen.getByTestId('fit-field-duration-0').textContent).toBe('30min')
+	expect(screen.getByTestId('fit-field-duration-1').textContent).toBe('30min')
 })
 
 it('should change the add-field for multiple data entries', () => {
@@ -251,19 +252,19 @@ it('should fit the given data into 3hr in the morning and 3-4hr in the afternoon
 	testData.SPEECHS.forEach((line) => {
 		order[getOrder(line.title)] = line.duration
 	})
-	console.log(order)
 	let maxKey = 0
-
 	for (const key in order) {
 		maxKey = maxKey < parseInt(key) ? parseInt(key) : maxKey
 	}
 
-	let sums = [0]
+	// test update
+	let sums = []
 	let j = 0
 
 	for (let i = 0; i <= maxKey; i++) {
 		if (order[i]) sums[j] += order[i]
-		else {
+		else if (sums.length < 1) sums.push(0)
+		else if (sums[j] !== 0) {
 			sums.push(0)
 			j++
 		}
@@ -275,5 +276,55 @@ it('should fit the given data into 3hr in the morning and 3-4hr in the afternoon
 			expect(sum).toBeGreaterThan(3 * 60)
 			expect(sum).toBeLessThanOrEqual(4 * 60)
 		}
+	})
+})
+
+it('should show time(am-pm), track no and fixed events(lunch & networking)', () => {
+	setup()
+	const inputEl = screen.getByTestId('input')
+	const addButtonEl = screen.getByTestId('add-btn')
+	const fitButtonEl = screen.getByTestId('fit-btn')
+
+	testData.SPEECHS.map((line, i) => {
+		fireEvent.change(inputEl, {
+			target: {
+				value: `${line.title} ${line.duration}min`,
+			},
+		})
+		fireEvent.click(addButtonEl)
+	})
+
+	fireEvent.click(fitButtonEl)
+
+	let order = {}
+	testData.SPEECHS.forEach((line) => {
+		order[getOrder(line.title)] = line.duration
+	})
+
+	let maxKey = 0
+	for (const key in order) {
+		maxKey = maxKey < parseInt(key) ? parseInt(key) : maxKey
+	}
+
+	let noLineRows = []
+	for (let i = 0; i <= maxKey; i++) {
+		if (!order[i]) noLineRows.push(i)
+	}
+
+	console.log(noLineRows)
+	let noLineOrder = [
+		['Track', ''],
+		['12:00PM', 'Lunch'],
+		['05:00PM', 'Networking Event'],
+		['', ''],
+	]
+	noLineRows.forEach((row, i) => {
+		console.log(noLineOrder[i % noLineOrder.length][0])
+		expect(screen.getByTestId(`fit-field-time-${row}`).textContent).toMatch(
+			noLineOrder[i % noLineOrder.length][0]
+		)
+		expect(screen.getByTestId(`fit-field-title-${row}`).textContent).toMatch(
+			noLineOrder[i % noLineOrder.length][1]
+		)
 	})
 })
