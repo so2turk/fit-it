@@ -208,12 +208,72 @@ it('should change the fit-field for multiple data entries', () => {
 	})
 
 	fireEvent.click(fitButtonEl)
+
 	testData.SPEECHS.map((line, i) => {
-		expect(screen.getByTestId(`fit-field-title-${i}`).textContent).toBe(
-			`${line.title}`
-		)
-		expect(screen.getByTestId(`add-field-duration-${i}`).textContent).toBe(
+		expect(screen.getByTestId(`fit-field`).textContent).toMatch(`${line.title}`)
+		expect(screen.getByTestId(`fit-field`).textContent).toMatch(
 			`${line.duration}min`
 		)
+	})
+})
+
+function getOrder(text) {
+	setup()
+	const el = screen.getAllByText(text)
+	const testId = /fit-field-title-[0-9]+/
+	const numbers = /([a-z]|-)/g
+
+	const order = parseInt(
+		el[1].outerHTML.match(testId)[0].replaceAll(numbers, '')
+	)
+
+	return order
+}
+
+it('should fit the given data into 3hr in the morning and 3-4hr in the afternoon', () => {
+	setup()
+	const inputEl = screen.getByTestId('input')
+	const addButtonEl = screen.getByTestId('add-btn')
+	const fitButtonEl = screen.getByTestId('fit-btn')
+
+	testData.SPEECHS.map((line, i) => {
+		fireEvent.change(inputEl, {
+			target: {
+				value: `${line.title} ${line.duration}min`,
+			},
+		})
+		fireEvent.click(addButtonEl)
+	})
+
+	fireEvent.click(fitButtonEl)
+
+	let order = {}
+	testData.SPEECHS.forEach((line) => {
+		order[getOrder(line.title)] = line.duration
+	})
+	console.log(order)
+	let maxKey = 0
+
+	for (const key in order) {
+		maxKey = maxKey < parseInt(key) ? parseInt(key) : maxKey
+	}
+
+	let sums = [0]
+	let j = 0
+
+	for (let i = 0; i <= maxKey; i++) {
+		if (order[i]) sums[j] += order[i]
+		else {
+			sums.push(0)
+			j++
+		}
+	}
+
+	sums.forEach((sum, i) => {
+		if (i % 2 === 0) expect(sum).toBe(3 * 60)
+		else {
+			expect(sum).toBeGreaterThan(3 * 60)
+			expect(sum).toBeLessThanOrEqual(4 * 60)
+		}
 	})
 })
