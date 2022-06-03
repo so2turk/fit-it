@@ -1,0 +1,102 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  color: rgb(4, 61, 83);;
+  font-size: 20px;
+}
+
+.main{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;  
+  width: 100%;
+}
+
+.input-field{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.input-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  width: 100%;
+}
+
+.alert {
+  margin-bottom: 100px;
+}
+
+.line-field {
+  display: flex;
+  flex-direction: row;
+}
+
+.add-field, .fit-field {
+  display: flex;
+  flex-direction: row;
+}
+
+.fit-field {
+  color: rgb(4, 61, 83)
+}
+
+.duration {
+  margin-left: 5px;
+}
+
+.time {
+  margin-right: 5px;
+}
+
+.time:empty {
+  height: 10px;
+}
+
+.fit-field {
+  margin-left: 30px;
+}
+
+input {
+  width: 40%;
+  min-width: 200px;
+  height: 24px;
+  border: 3px solid rgb(4, 61, 83);;
+  padding: 5px;
+  border-radius: 5px;
+  color: rgb(4, 61, 83);;
+}
+
+.button {
+  border: none;
+  padding: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 40px;
+}
+
+.add-btn {
+  background-color: rgb(21, 134, 179);;
+  margin-right: 10px;
+  margin-left: 10px;
+
+  color: white
+}
+
+.fit-btn {
+  background-color: rgb(4, 61, 83);
+  color: white;
+}

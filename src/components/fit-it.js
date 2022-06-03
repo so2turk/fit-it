@@ -192,7 +192,7 @@ const FitIt = () => {
 	}
 
 	return (
-		<>
+		<main className="main">
 			<header>
 				<h1 data-testid="title">Fit-It</h1>
 			</header>
@@ -290,7 +290,7 @@ const FitIt = () => {
 						})}
 				</div>
 			</section>
-		</>
+		</main>
 	)
 }
 
