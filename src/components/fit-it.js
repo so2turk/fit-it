@@ -1,10 +1,17 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const FitIt = () => {
 	const [lines, setLines] = useState([])
 	const [line, setLine] = useState('')
 	const [warning, setWarning] = useState()
 	const [fittedLines, setFittedLines] = useState([])
+
+	// useEffect(() => {
+	// 	fitIt()
+
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [lines])
+
 	const handleLineAdd = (e) => {
 		e.preventDefault()
 
